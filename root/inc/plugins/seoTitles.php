@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of SEO Titles plugin for MyBB.
- * Copyright (C) 2010-2013 Lukasz Tkacz <lukasamd@gmail.com>
+ * Copyright (C) Lukasz Tkacz <lukasamd@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- */ 
+ */
  
 /**
  * Disallow direct access to this file for security reasons
@@ -24,11 +24,13 @@
  */
 if (!defined("IN_MYBB")) exit;
 
+
 /**
- * Create plugin object
- * 
+ * Add hooks
+ *
  */
-$plugins->objects['seoTitles'] = new seoTitles();
+$plugins->add_hook("pre_output_page", ['seoTitles', 'makeTitle']);
+$plugins->add_hook('pre_output_page', ['seoTitles', 'pluginThanks']);
 
 /**
  * Standard MyBB info function
@@ -50,13 +52,33 @@ function seoTitles_info()
     return Array(
         'name' => $lang->seoTitlesName,
         'description' => $lang->seoTitlesDesc,
-        'website' => 'http://lukasztkacz.com',
+        'website' => 'https://tkacz.pro',
         'author' => 'Lukasz "LukasAMD" Tkacz',
-        'authorsite' => 'http://lukasztkacz.com',
-        'version' => '1.6',
-        'guid' => 'f190add5b01ce1b7b72da024ed8d1941',
-        'compatibility' => '16*'
+        'authorsite' => 'https://tkacz.pro',
+        'version' => '1.0.0',
+        'guid' => '',
+        'compatibility' => '18*',
+        'codename' => 'seo_titles',
     );
+}
+
+/**
+ * Standard MyBB installation functions
+ *
+ */
+function seoTitles_install() {
+    require_once MYBB_ROOT . '/inc/plugins/seoTitles.settings.php';
+    seoTitlesInstaller::install();
+}
+
+function seoTitles_is_installed() {
+    global $mybb;
+    return (isset($mybb->settings['seoTitlesForum']));
+}
+
+function seoTitles_uninstall() {
+    require_once MYBB_ROOT . '/inc/plugins/seoTitles.settings.php';
+    seoTitlesInstaller::uninstall();
 }
 
 /**
@@ -81,74 +103,83 @@ class seoTitles
 {
 
     /**
-     * Constructor - add plugin hooks
+     * Replace titles
+     *
+     * @param $content Page content
      */
-    public function __construct()
+    public static function makeTitle(&$content)
     {
-        global $plugins;
+        global $mybb, $lang, $page, $thread, $forum, $foruminfo, $memprofile;
 
-        // Add all hooks
-        $plugins->hooks["pre_output_page"][10]["seoTitles_makeTitle"] = array("function" => create_function('&$arg', 'global $plugins; $plugins->objects[\'seoTitles\']->makeTitle($arg);'));
-        $plugins->hooks["pre_output_page"][10]["seoTitles_pluginThanks"] = array("function" => create_function('&$arg', 'global $plugins; $plugins->objects[\'seoTitles\']->pluginThanks($arg);'));
-    }
-
-    public function makeTitle(&$content)
-    {
-        global $mybb, $lang, $page;
-
-        $lang->load("online");
-
+        $titleMatch = array();
         preg_match('#<title>(.*)<\/title>#iU', $content, $titleMatch);
         if (isset($titleMatch[1]))
         {
-            $newTitle = $titleMatch[1];
-            $standardName = $mybb->settings['bbname'] . ' - ';
+            $title  = '';
 
-            switch (THIS_SCRIPT)
-            {
+            switch (THIS_SCRIPT) {
                 case 'showthread.php':
-                    global $thread;
+                    $title = ($page > 1) ? self::getConfig('TopicPage') : self::getConfig('Topic');
 
-                    // Add thread prefix
-                    if ($thread['threadprefix'] != '')
-                    {
-                        $thread['threadprefix'] = str_replace("&nbsp;", "", $thread['threadprefix']);
-                        $newTitle = $thread['threadprefix'] . ' - ' . $newTitle;
+                    $title = str_replace('{$subject}', $thread['subject'], $title);
+                    $title = str_replace('{$lastposter}', $thread['lastposter'], $title);
+                    $title = str_replace('{$forum}', $forum['name'], $title);
+                    $title = str_replace('{$description}', $forum['description'], $title);
+
+                    // Add topic prefix
+                    if ($thread['threadprefix'] != '') {
+                        $prefix = str_replace(
+                            '{$prefix}',
+                            self::getConfig('Prefix'),
+                            str_replace("&nbsp;", "", $thread['threadprefix'])
+                        );
+
+                        $title = str_replace('{$prefix}', $prefix, $title);
+                    } else {
+                        $title = str_replace('{$prefix}', '', $title);
                     }
+
                     break;
 
-                // Add search results keyword
-                case 'search.php':
-                    global $search;
+                case 'forumdisplay.php':
+                    $title = ($page > 1) ? self::getConfig('ForumPage') : self::getConfig('Forum');
 
-                    if ($mybb->input['action'] == 'results' && $search['keywords'] != '')
-                    {
-                        $newTitle = str_replace($standardName, '', $newTitle);
-                        $newTitle = $search['keywords'] . ' - ' . $newTitle . ' - ' . $mybb->settings['bbname'];
-                    }
+                    $title = str_replace('{$forum}', $foruminfo['name'], $title);
+                    $title = str_replace('{$description}', $foruminfo['description'], $title);
                     break;
 
                 default:
+                    return;
                     break;
             }
 
             // Add page number
-            if ($page > 1)
-            {
-                $newTitle .= ' - ' . $lang->page . ' ' . $page;
+            if ($page > 1) {
+                $title = str_replace('{$page}', $page, $title);
             }
 
-            // Add board name
-            if (!strstr($titleMatch[1], $mybb->settings['bbname']))
-            {
-                $newTitle .= ' - ' . $mybb->settings['bbname'];
-            }
+            // Add main title
+            $title = str_replace('{$boardname}', $mybb->settings['bbname'], $title);
 
-            $oldTitle = '<title>' . $titleMatch[1] . '</title>';
-            $newTitle = '<title>' . $newTitle . '</title>';
-
-            $content = str_replace($oldTitle, $newTitle, $content);
+            $content = str_replace(
+                '<title>' . $titleMatch[1] . '</title>',
+                '<title>' . $title . '</title>',
+                $content
+            );
         }
+    }
+
+    /**
+     * Helper function to get variable from config
+     *
+     * @param string $name Name of config to get
+     * @return string Data config from MyBB Settings
+     */
+    public static function getConfig($name)
+    {
+        global $mybb;
+
+        return $mybb->settings["seoTitles{$name}"];
     }
     
     /**
@@ -156,13 +187,13 @@ class seoTitles
      * Please don't remove this code if you didn't make donate
      * It's the only way to say thanks without donate :)     
      */
-    public function pluginThanks(&$content)
+    public static function pluginThanks(&$content)
     {
         global $session, $lukasamd_thanks;
         
         if (!isset($lukasamd_thanks) && $session->is_spider)
         {
-            $thx = '<div style="margin:auto; text-align:center;">This forum uses <a href="http://lukasztkacz.com">Lukasz Tkacz</a> MyBB addons.</div></body>';
+            $thx = '<div style="margin:auto; text-align:center;">This forum uses <a href="https://tkacz.pro">Lukasz Tkacz</a> MyBB addons.</div></body>';
             $content = str_replace('</body>', $thx, $content);
             $lukasamd_thanks = true;
         }

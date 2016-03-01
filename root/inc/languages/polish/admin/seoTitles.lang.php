@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of SEO Titles plugin for MyBB.
- * Copyright (C) 2010-2013 Lukasz Tkacz <lukasamd@gmail.com>
+ * Copyright (C) Lukasz Tkacz <lukasamd@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,7 +16,43 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- */ 
+ */
 
 $l['seoTitlesName'] = 'Przyjazne (SEO) tytuły';
 $l['seoTitlesDesc'] = 'Ten plugin poprawia tytuły podstron na bardziej przyjazne (dodaje numery stron oraz nazwę forum).';
+$l['seoTitlesGroupDesc'] = 'Ustawienia pluginu "Przyjazne (SEO) tytuły"';
+
+$l['seoTitlesForum'] = 'Wzorzec dla widoku forum (bez numeru strony)';
+$l['seoTitlesForumDesc'] = 'Używany wzorzec. Możliwe zmienne:
+<br />{$forum} - nazwa forum
+<br />{$description} - opis forum
+<br />{$boardname} - nazwa witryny';
+
+$l['seoTitlesForumPage'] = 'Wzorzec dla widoku forum (z numerem strony)';
+$l['seoTitlesForumPageDesc']  = 'Używany wzorzec. Możliwe zmienne:
+<br />{$forum} - forum name
+<br />{$description} - opis forum
+<br />{$page} - numer strony
+<br />{$boardname} - nazwa witryny';
+
+$l['seoTitlesTopic'] = 'Wzorzec dla widoku tematu (bez numeru strony)';
+$l['seoTitlesTopicDesc'] = 'Używany wzorzec. Możliwe zmienne:
+<br />{$forum} - forum name
+<br />{$description} - opis forum
+<br />{$subject} - nazwa tematu
+<br />{$lastposter} - nick autora ostatniego postu
+<br />{$prefix} - prefix tematu
+<br />{$boardname} - nazwa witryny';
+
+$l['seoTitlesTopicPage'] = 'Wzorzec dla widoku tematu (z numerem strony)';
+$l['seoTitlesTopicPageDesc'] = 'Używany wzorzec. Możliwe zmienne:
+<br />{$forum} - forum name
+<br />{$description} - opis forum
+<br />{$page} - numer strony
+<br />{$subject} - nazwa tematu
+<br />{$lastposter} - nick autora ostatniego postu
+<br />{$prefix} - prefix tematu
+<br />{$boardname} - nazwa witryny';
+
+$l['seoTitlesPrefix'] = 'Wzorzec prefiksu tematu';
+$l['seoTitlesPrefixDesc'] = 'Tutaj można zmienić wzorzec prefiksu.';
