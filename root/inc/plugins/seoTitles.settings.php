@@ -57,7 +57,7 @@ class seoTitlesInstaller
             'title' => $db->escape_string($lang->seoTitlesForum),
             'description' => $db->escape_string($lang->seoTitlesForumDesc),
             'optionscode' => 'text',
-            'value' => '{forum} - {$boardname}',
+            'value' => '{$forum} - {$boardname}',
             'disporder' => $disporder++,
             'gid' => $gid
         );
