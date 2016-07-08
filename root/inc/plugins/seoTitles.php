@@ -55,7 +55,7 @@ function seoTitles_info()
         'website' => 'https://tkacz.pro',
         'author' => 'Lukasz "LukasAMD" Tkacz',
         'authorsite' => 'https://tkacz.pro',
-        'version' => '1.0.0',
+        'version' => '1.1.0',
         'guid' => '',
         'compatibility' => '18*',
         'codename' => 'seo_titles',
