@@ -55,7 +55,7 @@ function seoTitles_info()
         'website' => 'https://tkacz.pro',
         'author' => 'Lukasz "LukasAMD" Tkacz',
         'authorsite' => 'https://tkacz.pro',
-        'version' => '1.1.0',
+        'version' => '1.2.0',
         'guid' => '',
         'compatibility' => '18*',
         'codename' => 'seo_titles',
@@ -85,15 +85,9 @@ function seoTitles_uninstall() {
  * Standard MyBB activation functions 
  * 
  */
-function seoTitles_activate()
-{
-    
-}
+function seoTitles_activate() {}
 
-function seoTitles_deactivate()
-{
-    
-}
+function seoTitles_deactivate() {}
 
 /**
  * Plugin Class 

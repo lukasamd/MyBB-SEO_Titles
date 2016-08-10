@@ -41,7 +41,6 @@ class seoTitlesInstaller
         $disporder = 1;
 
         $settings_group = array(
-            'gid' => 'NULL',
             'name' => 'seoTitles',
             'title' => $db->escape_string($lang->seoTitlesName),
             'description' => $db->escape_string($lang->seoTitlesGroupDesc),
@@ -52,7 +51,6 @@ class seoTitlesInstaller
         $gid = (int) $db->insert_id();
 
         $setting = array(
-            'sid' => 'NULL',
             'name' => 'seoTitlesForum',
             'title' => $db->escape_string($lang->seoTitlesForum),
             'description' => $db->escape_string($lang->seoTitlesForumDesc),
@@ -64,7 +62,6 @@ class seoTitlesInstaller
         $db->insert_query('settings', $setting);
 
         $setting = array(
-            'sid' => 'NULL',
             'name' => 'seoTitlesForumPage',
             'title' => $db->escape_string($lang->seoTitlesForumPage),
             'description' => $db->escape_string($lang->seoTitlesForumPageDesc),
@@ -76,7 +73,6 @@ class seoTitlesInstaller
         $db->insert_query('settings', $setting);
 
         $setting = array(
-            'sid' => 'NULL',
             'name' => 'seoTitlesTopic',
             'title' => $db->escape_string($lang->seoTitlesTopic),
             'description' => $db->escape_string($lang->seoTitlesTopicDesc),
@@ -88,7 +84,6 @@ class seoTitlesInstaller
         $db->insert_query('settings', $setting);
 
         $setting = array(
-            'sid' => 'NULL',
             'name' => 'seoTitlesTopicPage',
             'title' => $db->escape_string($lang->seoTitlesTopicPage),
             'description' => $db->escape_string($lang->seoTitlesTopicPageDesc),
@@ -100,7 +95,6 @@ class seoTitlesInstaller
         $db->insert_query('settings', $setting);
 
         $setting = array(
-            'sid' => 'NULL',
             'name' => 'seoTitlesPrefix',
             'title' => $db->escape_string($lang->seoTitlesPrefix),
             'description' => $db->escape_string($lang->seoTitlesPrefixDesc),
