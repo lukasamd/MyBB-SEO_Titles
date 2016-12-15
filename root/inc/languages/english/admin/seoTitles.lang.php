@@ -58,7 +58,6 @@ $l['seoTitlesTopicPageDesc'] = 'Page title pattern. You can use variables:
 $l['seoTitlesMember'] = 'Patter for profile view';
 $l['seoTitlesMemberDesc'] = 'Page title pattern. You can use variables:
 <br />{$username} - member username
-<br />{$description} - forum description
 <br />{$boardname} - nazwa witryny';
 
 
