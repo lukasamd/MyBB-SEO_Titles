@@ -55,6 +55,12 @@ $l['seoTitlesTopicPageDesc'] = 'Page title pattern. You can use variables:
 <br />{$prefix} - thread prefix
 <br />{$boardname} - board name';
 
+$l['seoTitlesMember'] = 'Patter for profile view';
+$l['seoTitlesMemberDesc'] = 'Page title pattern. You can use variables:
+<br />{$username} - member username
+<br />{$description} - forum description
+<br />{$boardname} - nazwa witryny';
+
 
 $l['seoTitlesPrefix'] = 'Patter for prefix';
 $l['seoTitlesPrefixDesc'] = 'Here you can modify prefix data.';

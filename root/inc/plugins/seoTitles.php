@@ -142,6 +142,19 @@ class seoTitles
                     $title = str_replace('{$description}', $foruminfo['description'], $title);
                     break;
 
+                case 'member.php';
+                    global $memprofile;
+
+                    if (!empty($memprofile)) {
+                        $title = self::getConfig('Member');
+
+                        $title = str_replace('{$forum}', $foruminfo['name'], $title);
+                        $title = str_replace('{$description}', $foruminfo['description'], $title);
+                        $title = str_replace('{$username}', $memprofile['username'], $title);
+
+                    }
+                    break;
+
                 default:
                     return;
                     break;

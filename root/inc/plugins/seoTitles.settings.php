@@ -95,6 +95,17 @@ class seoTitlesInstaller
         $db->insert_query('settings', $setting);
 
         $setting = array(
+            'name' => 'seoTitlesMember',
+            'title' => $db->escape_string($lang->seoTitlesMember),
+            'description' => $db->escape_string($lang->seoTitlesMemberDesc),
+            'optionscode' => 'text',
+            'value' => '{$username} - {$boardname}',
+            'disporder' => $disporder++,
+            'gid' => $gid
+        );
+        $db->insert_query('settings', $setting);
+
+        $setting = array(
             'name' => 'seoTitlesPrefix',
             'title' => $db->escape_string($lang->seoTitlesPrefix),
             'description' => $db->escape_string($lang->seoTitlesPrefixDesc),
