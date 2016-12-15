@@ -59,5 +59,9 @@ $l['seoTitlesMemberDesc'] = 'Używany wzorzec. Możliwe zmienne:
 <br />{$username} - nazwa użytkownika
 <br />{$boardname} - nazwa witryny';
 
+$l['seoTitlesIndex'] = 'Wzorzec dla strony głównej forum';
+$l['seoTitlesIndexDesc'] = 'Używany wzorzec. Możliwe zmienne:
+<br />{$boardname} - nazwa witryny';
+
 $l['seoTitlesPrefix'] = 'Wzorzec prefiksu tematu';
 $l['seoTitlesPrefixDesc'] = 'Tutaj można zmienić wzorzec prefiksu.';

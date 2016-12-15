@@ -151,6 +151,10 @@ class seoTitles
                     }
                     break;
 
+                case 'index.php';
+                    $title = self::getConfig('Index');
+                    break;
+
                 default:
                     return;
                     break;

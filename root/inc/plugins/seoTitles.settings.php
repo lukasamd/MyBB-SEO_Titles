@@ -33,7 +33,7 @@ class seoTitlesInstaller
 
     public static function install() 
     {
-        global $db, $lang, $mybb;
+        global $db, $lang;
         self::uninstall();
 
         $result = $db->simple_select('settinggroups', 'MAX(disporder) AS max_disporder');
@@ -49,6 +49,17 @@ class seoTitlesInstaller
         );
         $db->insert_query('settinggroups', $settings_group);
         $gid = (int) $db->insert_id();
+
+        $setting = array(
+            'name' => 'seoTitlesIndex',
+            'title' => $db->escape_string($lang->seoTitlesIndex),
+            'description' => $db->escape_string($lang->seoTitlesIndexDesc),
+            'optionscode' => 'text',
+            'value' => '{$boardname}',
+            'disporder' => $disporder++,
+            'gid' => $gid
+        );
+        $db->insert_query('settings', $setting);
 
         $setting = array(
             'name' => 'seoTitlesForum',
