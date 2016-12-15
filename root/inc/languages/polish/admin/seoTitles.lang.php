@@ -65,3 +65,21 @@ $l['seoTitlesIndexDesc'] = 'Używany wzorzec. Możliwe zmienne:
 
 $l['seoTitlesPrefix'] = 'Wzorzec prefiksu tematu';
 $l['seoTitlesPrefixDesc'] = 'Tutaj można zmienić wzorzec prefiksu.';
+
+$l['seoTitlesOGType'] = 'Open Graph Type';
+$l['seoTitlesOGTypeDesc'] = 'Domyślny parametr type dla Open Graph.';
+
+$l['seoTitlesOGTitle'] = 'Open Graph Title';
+$l['seoTitlesOGTitleDesc'] = 'Domyślny parametr title dla Open Graph.';
+
+$l['seoTitlesOGDesc'] = 'Open Graph Description';
+$l['seoTitlesOGDescDesc'] = 'Domyślny parametr description dla Open Graph.';
+
+$l['seoTitlesOGImage'] = 'Open Graph Image';
+$l['seoTitlesOGImageDesc'] = 'Domyślny adres obrazka dla Open Graph.';
+
+$l['seoTitlesOGFacebook'] = 'Open Graph Facebook APP ID';
+$l['seoTitlesOGFacebookDesc'] = 'Numer APP ID z Facebooka dla Open Graph.';
+
+$l['seoTitlesOGGenerate'] = 'Automatyczne generowanie Open Graph';
+$l['seoTitlesOGGenerateDesc'] = 'Jeśli włączone, dodatek spróbuje dynamicznie generować dane dla Open Graph na podstawie treści na forum.';

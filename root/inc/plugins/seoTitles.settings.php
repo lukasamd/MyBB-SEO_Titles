@@ -126,6 +126,72 @@ class seoTitlesInstaller
             'gid' => $gid
         );
         $db->insert_query('settings', $setting);
+
+        $setting = array(
+            'name' => 'seoTitlesOGType',
+            'title' => $db->escape_string($lang->seoTitlesOGType),
+            'description' => $db->escape_string($lang->seoTitlesOGTypeDesc),
+            'optionscode' => 'text',
+            'value' => 'website',
+            'disporder' => $disporder++,
+            'gid' => $gid
+        );
+        $db->insert_query('settings', $setting);
+
+        $setting = array(
+            'name' => 'seoTitlesOGTitle',
+            'title' => $db->escape_string($lang->seoTitlesOGTitle),
+            'description' => $db->escape_string($lang->seoTitlesOGTitleDesc),
+            'optionscode' => 'text',
+            'value' => '',
+            'disporder' => $disporder++,
+            'gid' => $gid
+        );
+        $db->insert_query('settings', $setting);
+
+        $setting = array(
+            'name' => 'seoTitlesOGDesc',
+            'title' => $db->escape_string($lang->seoTitlesOGDesc),
+            'description' => $db->escape_string($lang->seoTitlesOGDescDesc),
+            'optionscode' => 'text',
+            'value' => '',
+            'disporder' => $disporder++,
+            'gid' => $gid
+        );
+        $db->insert_query('settings', $setting);
+
+        $setting = array(
+            'name' => 'seoTitlesOGImage',
+            'title' => $db->escape_string($lang->seoTitlesOGImage),
+            'description' => $db->escape_string($lang->seoTitlesOGImageDesc),
+            'optionscode' => 'text',
+            'value' => '',
+            'disporder' => $disporder++,
+            'gid' => $gid
+        );
+        $db->insert_query('settings', $setting);
+
+        $setting = array(
+            'name' => 'seoTitlesOGFacebook',
+            'title' => $db->escape_string($lang->seoTitlesOGFacebook),
+            'description' => $db->escape_string($lang->seoTitlesOGFacebookDesc),
+            'optionscode' => 'text',
+            'value' => '',
+            'disporder' => $disporder++,
+            'gid' => $gid
+        );
+        $db->insert_query('settings', $setting);
+
+        $setting = array(
+            'name' => 'seoTitlesOGGenerate',
+            'title' => $db->escape_string($lang->seoTitlesOGGenerate),
+            'description' => $db->escape_string($lang->seoTitlesOGGenerateDesc),
+            'optionscode' => 'yesno',
+            'value' => '0',
+            'disporder' => $disporder++,
+            'gid' => $gid
+        );
+        $db->insert_query('settings', $setting);
         
         rebuild_settings();
     }

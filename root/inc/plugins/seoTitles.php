@@ -53,9 +53,9 @@ function seoTitles_info()
         'name' => $lang->seoTitlesName,
         'description' => $lang->seoTitlesDesc,
         'website' => 'https://tkacz.pro',
-        'author' => 'Lukasz "LukasAMD" Tkacz',
+        'author' => 'Lukasz Tkacz',
         'authorsite' => 'https://tkacz.pro',
-        'version' => '1.2.0',
+        'version' => '1.3.0',
         'guid' => '',
         'compatibility' => '18*',
         'codename' => 'seo_titles',
@@ -85,9 +85,15 @@ function seoTitles_uninstall() {
  * Standard MyBB activation functions 
  * 
  */
-function seoTitles_activate() {}
+function seoTitles_activate() {
+    require_once('seoTitles.tpl.php');
+    seoTitlesActivator::activate();
+}
 
-function seoTitles_deactivate() {}
+function seoTitles_deactivate() {
+    require_once('seoTitles.tpl.php');
+    seoTitlesActivator::deactivate();
+}
 
 /**
  * Plugin Class 
@@ -103,7 +109,9 @@ class seoTitles
      */
     public static function makeTitle(&$content)
     {
-        global $mybb, $lang, $page, $thread, $forum, $foruminfo, $memprofile;
+        global $mybb, $page, $thread, $forum, $foruminfo, $memprofile;
+
+        $ogDesc = '';
 
         $titleMatch = array();
         preg_match('#<title>(.*)<\/title>#iU', $content, $titleMatch);
@@ -119,6 +127,8 @@ class seoTitles
                     $title = str_replace('{$lastposter}', $thread['lastposter'], $title);
                     $title = str_replace('{$forum}', $forum['name'], $title);
                     $title = str_replace('{$description}', $forum['description'], $title);
+
+                    $ogDesc = $forum['description'];
 
                     // Add topic prefix
                     if ($thread['threadprefix'] != '') {
@@ -140,13 +150,14 @@ class seoTitles
 
                     $title = str_replace('{$forum}', $foruminfo['name'], $title);
                     $title = str_replace('{$description}', $foruminfo['description'], $title);
+
+                    $ogDesc = $foruminfo['description'];
                     break;
 
                 case 'member.php';
                     if (!empty($memprofile)) {
                         $title = self::getConfig('Member');
 
-                        $title = str_replace('{$forum}', $foruminfo['name'], $title);
                         $title = str_replace('{$username}', $memprofile['username'], $title);
                     }
                     break;
@@ -173,6 +184,34 @@ class seoTitles
                 '<title>' . $title . '</title>',
                 $content
             );
+
+            // Add Open Graph data
+            $ogData = '';
+            $ogData .= '<meta property="og:url" content="' . $mybb->settings['bburl'] . getenv("REQUEST_URI") . '" />';
+            if (self::getConfig('OGType')) {
+                $ogData .= '<meta property="og:type" content="' . self::getConfig('OGType') . '" />';
+            }
+            if (self::getConfig('OGImage')) {
+                $ogData .= '<meta property="og:image" content="' . self::getConfig('OGImage') . '" />';
+            }
+            if (self::getConfig('OGFacebook')) {
+                $ogData .= '<meta property="fb:app_id" content="' . self::getConfig('OGFacebook') . '" />';
+            }
+
+            $ogTitle = (!self::getConfig('seoTitlesOGGenerate')) ? $title : self::getConfig('OGTitle');
+            if ($ogTitle) {
+                $ogData .= '<meta property="og:title" content="' . $title . '" />';
+            }
+
+            if (!self::getConfig('seoTitlesOGGenerate') || !$ogDesc) {
+                $ogDesc = self::getConfig('OGDesc');
+            }
+            if ($ogDesc) {
+                $ogData .= '<meta property="og:description" content="' . $ogDesc . '" />';
+            }
+
+            $ogData = str_replace('/>', "/>\n", $ogData);
+            $content = str_replace('<!-- SEO_TITLE_META -->', $ogData, $content);
         }
     }
 

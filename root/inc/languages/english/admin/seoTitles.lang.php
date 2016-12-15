@@ -67,3 +67,21 @@ $l['seoTitlesIndexDesc'] = 'Page title pattern. You can use variables:
 
 $l['seoTitlesPrefix'] = 'Patter for prefix';
 $l['seoTitlesPrefixDesc'] = 'Here you can modify prefix data.';
+
+$l['seoTitlesOGType'] = 'Open Graph Type';
+$l['seoTitlesOGTypeDesc'] = 'Default type parameter for Open Graph.';
+
+$l['seoTitlesOGTitle'] = 'Open Graph Title';
+$l['seoTitlesOGTitleDesc'] = 'Default title for Open Graph.';
+
+$l['seoTitlesOGDesc'] = 'Open Graph Description';
+$l['seoTitlesOGDescDesc'] = 'Default description for Open Graph.';
+
+$l['seoTitlesOGImage'] = 'Open Graph Image';
+$l['seoTitlesOGImageDesc'] = 'Default image url for Open Graph.';
+
+$l['seoTitlesOGFacebook'] = 'Open Graph Facebook APP ID';
+$l['seoTitlesOGFacebookDesc'] = 'APP ID from Facebook for Open Graph.';
+
+$l['seoTitlesOGGenerate'] = 'Automaically generate Open Graph data';
+$l['seoTitlesOGGenerateDesc'] = 'If enabled, plugin will try to generate Open Graph data based on forum content.';
