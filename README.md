@@ -1,3 +1,10 @@
+# Plugin is abandoned
+I decided to stop developling MyBB addons. You can find details here:
+https://github.com/lukasamd/MyBB-View_Unread_posts/issues/25
+
+---
+
+
 # SEO Titles for MyBB
 
 This plugin impoves forum subpages titles (add page number and forum name) for search engines robots.
